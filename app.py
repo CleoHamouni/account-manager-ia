@@ -1,25 +1,33 @@
 import streamlit as st
 
+# Configuration de la page
 st.set_page_config(page_title="Account Manager Pro", layout="wide", page_icon="📈")
 
-# --- STYLE PERSONNALISÉ ---
+# --- STYLE PERSONNALISÉ (CORRIGÉ) ---
 st.markdown("""
     <style>
     .main { background-color: #f5f7f9; }
-    .stButton>button { width: 100%; border-radius: 5px; height: 3em; background-color: #007bff; color: white; }
+    .stButton>button { 
+        width: 100%; 
+        border-radius: 5px; 
+        height: 3em; 
+        background-color: #007bff; 
+        color: white; 
+        font-weight: bold;
+    }
     </style>
-    """, unsafe_allow_stdio=True)
+    """, unsafe_allow_html=True)
 
 st.title("🚀 Strategic Account Scorer & Tracker")
-st.markdown("Identifiez vos comptes clés et préparez vos points hebdo en un clic.")
+st.markdown("Identifiez vos comptes clés et préparez vos points hebdomadaires avec précision.")
 
-# --- SIDEBAR ---
+# --- BARRE LATÉRALE (SIDEBAR) ---
 with st.sidebar:
-    st.header("⚙️ Options")
+    st.header("⚙️ Actions")
     if st.button("➕ Nouveau Compte / Reset"):
         st.rerun()
     st.divider()
-    st.info("Ce score est calculé sur le Potentiel, l'Accessibilité et le Fit Technologique.")
+    st.info("Le score est basé sur le Potentiel Business, l'Accessibilité et le Fit Technologique.")
 
 # --- SECTION 1 : IDENTITÉ ET SCORING ---
 col1, col2 = st.columns([1, 1])
@@ -34,55 +42,4 @@ with col1:
 with col2:
     st.subheader("📊 Scoring Stratégique (1 à 5)")
     potentiel = st.slider("Potentiel Business (Volume de besoins)", 1, 5, 3)
-    accessibilite = st.slider("Accessibilité (Réseau / Facilité d'entrée)", 1, 5, 2)
-    fit_techno = st.slider("Fit avec notre Expertise", 1, 5, 4)
-    
-    # Calcul du score sur 100
-    score_final = (potentiel + accessibilite + fit_techno) * 6.67
-    
-    if score_final >= 75:
-        st.success(f"Score : {int(score_final)}/100 - Priorité : TIER 1 🔥")
-    elif score_final >= 45:
-        st.warning(f"Score : {int(score_final)}/100 - Priorité : TIER 2 ⚡")
-    else:
-        st.error(f"Score : {int(score_final)}/100 - Priorité : TIER 3 💤")
-
-# --- SECTION 2 : PROSPECTION ET ACTIONS ---
-st.divider()
-col3, col4 = st.columns(2)
-
-with col3:
-    st.subheader("🎯 Stratégie & Accroche")
-    hook = st.text_area("L'angle d'attaque (Pourquoi maintenant ?)", placeholder="ex: Recrutent massivement sur React, viennent de changer de DSI...")
-    concurrence = st.text_input("Concurrents en place", placeholder="ex: Alten, Akkodis...")
-
-with col4:
-    st.subheader("📋 Suivi d'Activité")
-    faits = st.text_area("✅ ACCOMPLI (Cette semaine)", placeholder="- 3 appels passés\n- Profil envoyé par mail")
-    a_faire = st.text_area("⏳ À FAIRE (Semaine prochaine)", placeholder="- Relancer le Champion lundi\n- Préparer dossier de réf")
-
-# --- SECTION 3 : GÉNÉRATION DU RAPPORT MANAGER ---
-st.divider()
-if st.button("📄 GÉNÉRER LE MÉMO POUR MA MANAGER"):
-    tier = "TIER 1 🔥" if score_final >= 75 else "TIER 2 ⚡" if score_final >= 45 else "TIER 3 💤"
-    
-    report = f"""📝 MÉMO HEBDO - {nom_compte.upper()} ({secteur})
---------------------------------------------------
-⭐ PRIORITÉ : {tier} (Score: {int(score_final)}/100)
-📍 STATUT ACTUEL : {statut}
-👤 CHAMPION : {champion}
-
-✅ ACTIONS RÉALISÉES :
-{faits if faits else "Aucune action notée."}
-
-🚀 PROCHAINES ÉTAPES :
-{a_faire if a_faire else "À définir."}
-
-💡 STRATÉGIE & CONTEXTE :
-{hook}
---------------------------------------------------
-🛠 CONCURRENCE : {concurrence}
-"""
-    st.subheader("Votre rapport prêt à être copié :")
-    st.code(report, language="text")
-    st.balloons()
+    accessibilite = st.slider("Accessibilité (Réseau / Facilité d'entrée)", 1, 5,
